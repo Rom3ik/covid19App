@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+.content {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  margin: 0 12px;
+}
+
+.d-flex {
+  display: flex;
+  align-items: center;
+}
+
+.gap-20 {
+  gap: 20px;
+}

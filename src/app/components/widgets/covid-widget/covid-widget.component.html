@@ -1,0 +1,49 @@
+<div class="widget-container">
+  <div class="widget-header">
+    <div class="select">
+      <select (change)="countryChanged($event)">
+        <option
+          [selected]="country.country === 'Azerbaijan'"
+          [value]="country.country"
+          *ngFor="let country of countries">{{country.country}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="widget-content"
+       *ngIf="(covidService.dataLoaded | async) else loading">
+    <div class="content-wrapper">
+      <div class="d-flex gap-20">
+        <img src="assets/icons/confirmed.png" alt="confirmed">
+        <p>Confirmed:</p>
+      </div>
+      <span>{{covidService.casesList.All.confirmed}}</span>
+    </div>
+    <div class="content-wrapper">
+      <div class="d-flex gap-20">
+        <img src="assets/icons/recovered.png" alt="confirmed">
+        <p>Recovered:</p>
+      </div>
+      <span>{{covidService.casesList.All.recovered}}</span>
+    </div>
+    <div class="content-wrapper">
+      <div class="d-flex gap-20">
+        <img src="assets/icons/death.png" alt="confirmed">
+        <p>Deaths:</p>
+      </div>
+      <span>{{covidService.casesList.All.deaths}}</span>
+    </div>
+    <div class="content-wrapper">
+      <div class="d-flex gap-20">
+        <img src="assets/icons/vaccine.png" alt="confirmed">
+        <p>Vaccines:</p>
+      </div>
+      <span>{{covidService.casesList.All.deaths}}</span>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="widget-content spinner-wrapper">
+    <div id="spinner"></div>
+  </div>
+</ng-template>
