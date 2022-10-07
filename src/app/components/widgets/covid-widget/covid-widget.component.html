@@ -11,7 +11,7 @@
     </div>
   </div>
   <div class="widget-content"
-       *ngIf="(covidService.dataLoaded | async) else loading">
+       *ngIf="(covidService.requestEnded | async) else loading">
     <small>Updated at: {{covidService.casesList?.All?.updated | date: 'YYYY-MM-dd'}}</small>
     <div class="content-wrapper">
       <div class="d-flex gap-20 align-items-center">
@@ -25,7 +25,7 @@
       <div class="d-flex gap-20 align-items-center">
         <p>Recovered:</p>
       </div>
-      <span>{{covidService.casesList?.All?.recovered || '---'}}</span>
+      <span>{{covidService.casesList?.All?.recovered}}</span>
     </div>
     <div class="content-wrapper">
       <div class="d-flex gap-20 align-items-center">

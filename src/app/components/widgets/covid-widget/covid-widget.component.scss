@@ -32,7 +32,7 @@ select {
   flex: 1;
   padding: 0 1em;
   color: #fff;
-  background-color: #323232;
+  background-color: #407ebd;
   background-image: none;
   cursor: pointer;
 }
@@ -54,7 +54,7 @@ select::-ms-expand {
     top: 0;
     right: 0;
     padding: 0 1em;
-    background-color: #34495e;
+    background-color: #407ebd;
     transition: 0.25s all ease;
     pointer-events: none;
     height: 100%;
@@ -64,7 +64,7 @@ select::-ms-expand {
 }
 
 .select:hover::after {
-  color: #7c7c7c;
+  color: #16579a;
 }
 
 #spinner {

@@ -16,9 +16,9 @@ const prefixes = {
 export class CovidStatisticService {
 
   casesList!: Statistic;
-  newCases!: number;
+  newCases: number = 0;
   vaccinesList!: Vaccines;
-  dataLoaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+  requestEnded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
 
   constructor(private httpClient: HttpClient) {
   }
