@@ -1,8 +1,9 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {countries} from "../../../countries";
 import {CovidStatisticService} from "../../../modules/home/services/covid-statistic.service";
-import {AutoUnsubscribe} from "../../../directives/auto-unsubscribe";
-import {Subscription} from "rxjs";
+import {AutoUnsubscribe} from "../../../decorators/auto-unsubscribe";
+import {forkJoin, Subscription, throwError} from "rxjs";
+import {catchError, finalize} from "rxjs/operators";
 
 @Component({
   selector: 'app-covid-widget',
@@ -15,51 +16,41 @@ import {Subscription} from "rxjs";
 @AutoUnsubscribe()
 export class CovidWidgetComponent implements OnInit, OnDestroy {
 
-  casesSubscription$: Subscription = new Subscription();
   countries = countries;
-  historySubscription$: Subscription = new Subscription();
-  vaccinesSubscription$: Subscription = new Subscription();
-  dataLoaded = false;
+  subscription$: Subscription = new Subscription();
 
 
   constructor(public covidService: CovidStatisticService) {
   }
 
   ngOnInit(): void {
-    this.getAlLCases('Azerbaijan');
-    this.getHistory('Azerbaijan');
-    this.getVaccines('Azerbaijan');
+    this.getCovidStatistic();
   }
 
-  //Live cases data
-  getAlLCases(country: string): void {
-    this.casesSubscription$ = this.covidService.getAllCases(country)
-      .subscribe((res) => {
-        this.covidService.casesList = res;
-        this.dataLoaded = true;
+
+  getCovidStatistic(country?: string) {
+    this.subscription$ = forkJoin({
+      cases: this.covidService.getAllCases(country ? country : 'Azerbaijan'),
+      history: this.covidService.getHistory(country ? country : 'Azerbaijan'),
+      vaccines: this.covidService.getVaccines(country ? country : 'Azerbaijan'),
+    }).pipe(
+      finalize(() => {
         this.covidService.dataLoaded.next(true);
-      })
+      }),
+      catchError(err => {
+        return throwError(err)
+      }),
+    ).subscribe(res => {
+      this.covidService.casesList = res.cases;
+      this.covidService.vaccinesList = res.vaccines;
+      this.covidService.calculateNewCases(<number>Object.values(res.history.All.dates)[0], <number>Object.values(res.history.All.dates)[1]);
+    })
   }
 
-  //Historical cases data
-  getHistory(country: string): void {
-    this.historySubscription$ = this.covidService.getHistory(country)
-      .subscribe((res) => {
-        this.covidService.historyList = res;
-      })
-  }
-
-  //Vaccines data
-  getVaccines(country: string): void {
-    this.vaccinesSubscription$ = this.covidService.getVaccines(country)
-      .subscribe((res) => {
-        this.covidService.vaccinesList = res;
-      })
-  }
 
   countryChanged(event: any): void {
     this.covidService.dataLoaded.next(false);
-    this.getAlLCases(event.target.value);
+    this.getCovidStatistic(event.target.value);
   }
 
   ngOnDestroy(): void {

@@ -4,7 +4,6 @@ import { HomeRoutingModule } from './home-routing.module';
 import {MainComponent} from "./main/main.component";
 import {CovidWidgetComponent} from "../../components/widgets/covid-widget/covid-widget.component";
 
-
 @NgModule({
   declarations: [
     MainComponent,

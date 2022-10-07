@@ -17,6 +17,7 @@ export class CovidStatisticService {
 
   casesList!: Statistic;
   historyList!: History;
+  newCases!: number;
   vaccinesList!: Vaccines;
   dataLoaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
 
@@ -29,12 +30,15 @@ export class CovidStatisticService {
   }
 
   getHistory(country: string): Observable<History> {
-    return this.httpClient.get<History>((API_URL + prefixes.history + `?status=recovered&country=${country}`))
+    return this.httpClient.get<History>((API_URL + prefixes.history + `?status=confirmed&country=${country}`))
   }
 
   getVaccines(country: string): Observable<Vaccines> {
     return this.httpClient.get<Vaccines>(API_URL + prefixes.vaccines + `?country=${country}&ab=AZ`)
   }
 
+  calculateNewCases(last: number, yesterday: number) {
+    this.newCases = last - yesterday;
+  }
 
 }

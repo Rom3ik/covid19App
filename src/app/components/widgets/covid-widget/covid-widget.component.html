@@ -11,33 +11,32 @@
   </div>
   <div class="widget-content"
        *ngIf="(covidService.dataLoaded | async) else loading">
+    <small>Updated: {{covidService.casesList.All.updated | date: 'YYYY-MM-dd'}}</small>
     <div class="content-wrapper">
-      <div class="d-flex gap-20">
-        <img src="assets/icons/confirmed.png" alt="confirmed">
+      <div class="d-flex gap-20 align-items-center">
         <p>Confirmed:</p>
       </div>
-      <span>{{covidService.casesList.All.confirmed}}</span>
+      <div class="d-column align-items-end">
+        <span>{{covidService.casesList.All.confirmed}}</span>
+      </div>
     </div>
     <div class="content-wrapper">
-      <div class="d-flex gap-20">
-        <img src="assets/icons/recovered.png" alt="confirmed">
+      <div class="d-flex gap-20 align-items-center">
         <p>Recovered:</p>
       </div>
       <span>{{covidService.casesList.All.recovered}}</span>
     </div>
     <div class="content-wrapper">
-      <div class="d-flex gap-20">
-        <img src="assets/icons/death.png" alt="confirmed">
+      <div class="d-flex gap-20 align-items-center">
         <p>Deaths:</p>
       </div>
-      <span>{{covidService.casesList.All.deaths}}</span>
+      <span>{{covidService.casesList.All?.deaths}}</span>
     </div>
     <div class="content-wrapper">
-      <div class="d-flex gap-20">
-        <img src="assets/icons/vaccine.png" alt="confirmed">
-        <p>Vaccines:</p>
+      <div class="d-flex gap-20 align-items-center">
+        <p>New cases (1d*):</p>
       </div>
-      <span>{{covidService.casesList.All.deaths}}</span>
+      <span>{{covidService?.newCases}}</span>
     </div>
   </div>
 </div>
