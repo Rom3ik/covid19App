@@ -30,7 +30,8 @@ export class CovidWidgetComponent implements OnInit, OnDestroy {
 
   //get all data by grouping observables in one
   getCovidStatistic(country?: string) {
-    forkJoin(
+    this.covidService.dataLoaded.next(false);
+    this.subscription$ = forkJoin(
       {
         cases: this.covidService.getAllCases(country ? country : 'Azerbaijan').pipe(catchError(err => of(err))),
         history: this.covidService.getHistory(country ? country : 'Azerbaijan').pipe(catchError(err => of(err))),
@@ -51,8 +52,8 @@ export class CovidWidgetComponent implements OnInit, OnDestroy {
   }
 
 
+  //handle country changes and update data
   countryChanged(event: any): void {
-    this.covidService.dataLoaded.next(false);
     this.getCovidStatistic(event.target.value);
   }
 
