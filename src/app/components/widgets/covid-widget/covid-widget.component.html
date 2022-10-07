@@ -25,7 +25,7 @@
       <div class="d-flex gap-20 align-items-center">
         <p>Recovered:</p>
       </div>
-      <span>{{covidService.casesList?.All?.recovered}}</span>
+      <span>{{covidService.casesList?.All?.recovered ||  '---'}}</span>
     </div>
     <div class="content-wrapper">
       <div class="d-flex gap-20 align-items-center">

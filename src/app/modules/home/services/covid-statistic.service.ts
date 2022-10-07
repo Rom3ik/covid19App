@@ -38,11 +38,19 @@ export class CovidStatisticService {
   }
 
   calculateNewCases(last: number, yesterday: number) {
+    if (!last && !yesterday) {
+      return;
+    }
     this.newCases = last - yesterday;
+
   }
 
   getPercentageOfVaccinatedPeople(vaccinatedPeople: number, totalPopulation: number) {
+    if (!vaccinatedPeople && !totalPopulation) {
+      return
+    }
     this.vaccinatedPeopleInPercent = +(vaccinatedPeople * 100 / totalPopulation).toFixed(2);
+
   }
 
 }
