@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/co
 import {countries} from "../../../countries";
 import {CovidStatisticService} from "../../../modules/home/services/covid-statistic.service";
 import {AutoUnsubscribe} from "../../../decorators/auto-unsubscribe";
-import {forkJoin, Subscription, throwError} from "rxjs";
+import {forkJoin, of, Subscription, throwError} from "rxjs";
 import {catchError, finalize} from "rxjs/operators";
 
 @Component({
@@ -12,7 +12,7 @@ import {catchError, finalize} from "rxjs/operators";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-//auto unsubscribe from all subscriptions
+//auto unsubscribe from all subscriptions when page destroys
 @AutoUnsubscribe()
 export class CovidWidgetComponent implements OnInit, OnDestroy {
 
@@ -28,12 +28,15 @@ export class CovidWidgetComponent implements OnInit, OnDestroy {
   }
 
 
+  //get all data by grouping observables in one
   getCovidStatistic(country?: string) {
-    this.subscription$ = forkJoin({
-      cases: this.covidService.getAllCases(country ? country : 'Azerbaijan'),
-      history: this.covidService.getHistory(country ? country : 'Azerbaijan'),
-      vaccines: this.covidService.getVaccines(country ? country : 'Azerbaijan'),
-    }).pipe(
+    forkJoin(
+      {
+        cases: this.covidService.getAllCases(country ? country : 'Azerbaijan').pipe(catchError(err => of(err))),
+        history: this.covidService.getHistory(country ? country : 'Azerbaijan').pipe(catchError(err => of(err))),
+        vaccines: this.covidService.getVaccines(country ? country : 'Azerbaijan').pipe(catchError(err => of(err))),
+      }
+    ).pipe(
       finalize(() => {
         this.covidService.dataLoaded.next(true);
       }),

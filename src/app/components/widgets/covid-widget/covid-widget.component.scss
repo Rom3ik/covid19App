@@ -13,7 +13,7 @@
 .widget-header {
   background-color: #4A4A4A;
   border-radius: 10px 10px 0 0;
-  height: 5rem;
+  height: 3.5rem;
 }
 
 .widget-content {
@@ -43,27 +43,28 @@ select::-ms-expand {
 
 .select {
   position: relative;
-  height: 3em;
+  height: 100%;
   border-radius: 0.25em;
   overflow: hidden;
-  float: right;
-  bottom: 0;
   display: flex;
 
   &:after {
-    content: '\25BC';
+    content: "\25BC";
     position: absolute;
     top: 0;
     right: 0;
-    padding: 1em;
+    padding: 0 1em;
     background-color: #34495e;
-    transition: .25s all ease;
+    transition: 0.25s all ease;
     pointer-events: none;
+    height: 100%;
+    display: flex;
+    align-items: center;
   }
 }
 
 .select:hover::after {
-  color: #f39c12;
+  color: #7c7c7c;
 }
 
 #spinner {
@@ -80,7 +81,7 @@ select::-ms-expand {
   align-items: center;
   justify-content: center;
   height: 100%;
-  min-height: 25.5rem;
+  min-height: 31em;
   margin-top: 0;
   padding-top: 0;
   position: relative;

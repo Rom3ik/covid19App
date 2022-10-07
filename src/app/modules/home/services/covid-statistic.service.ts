@@ -16,7 +16,6 @@ const prefixes = {
 export class CovidStatisticService {
 
   casesList!: Statistic;
-  historyList!: History;
   newCases!: number;
   vaccinesList!: Vaccines;
   dataLoaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
