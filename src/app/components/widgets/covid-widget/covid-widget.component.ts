@@ -49,6 +49,7 @@ export class CovidWidgetComponent implements OnInit, OnDestroy {
       this.covidService.casesList = res.cases;
       this.covidService.vaccinesList = res.vaccines;
       this.covidService.calculateNewCases(<number>Object.values(res.history.All.dates)[0], <number>Object.values(res.history.All.dates)[1]);
+      this.covidService.getPercentageOfVaccinatedPeople(res.vaccines.people_vaccinated, res.vaccines.population);
     })
   }
 

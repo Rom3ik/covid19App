@@ -17,6 +17,7 @@ export class CovidStatisticService {
 
   casesList!: Statistic;
   newCases: number = 0;
+  vaccinatedPeopleInPercent: number = 0;
   vaccinesList!: Vaccines;
   requestEnded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
 
@@ -33,11 +34,15 @@ export class CovidStatisticService {
   }
 
   getVaccines(country: string): Observable<Vaccines> {
-    return this.httpClient.get<Vaccines>(API_URL + prefixes.vaccines + `?country=${country}&ab=AZ`)
+    return this.httpClient.get<Vaccines>(API_URL + prefixes.vaccines + `?country=${country}`)
   }
 
   calculateNewCases(last: number, yesterday: number) {
     this.newCases = last - yesterday;
+  }
+
+  getPercentageOfVaccinatedPeople(vaccinatedPeople: number, totalPopulation: number) {
+    this.vaccinatedPeopleInPercent = +(vaccinatedPeople * 100 / totalPopulation).toFixed(2);
   }
 
 }
