@@ -29,6 +29,7 @@ export class CovidContentComponent implements OnInit, OnDestroy {
   }
 
   getCovidStatistic(country: string): void {
+    this.covidService.requestEnded.next(false);
     combineLatest([
         this.covidService.getAllCases(country ? country : 'Azerbaijan').pipe(catchError((err: any) => (of(err)))),
         this.covidService.getHistory(country ? country : 'Azerbaijan').pipe(catchError((err: any) => (of(err)))),
@@ -50,7 +51,6 @@ export class CovidContentComponent implements OnInit, OnDestroy {
   }
 
   countryChanged(event: any): void {
-    this.covidService.requestEnded.next(false);
     this.getCovidStatistic(event.target.value);
   }
 
