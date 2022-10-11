@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {CovidStatisticService} from "../../../core/services/covid-statistic.service";
 import {combineLatest, of, Subject} from "rxjs";
-import {catchError, finalize, map} from "rxjs/operators";
+import {catchError, finalize, map, takeUntil} from "rxjs/operators";
 import {countries} from "../../../countries";
 
 @Component({
@@ -49,6 +49,7 @@ export class CovidContentComponent implements OnInit, OnDestroy {
         finalize(() => {
           this.covidService.requestEnded.next(true)
         }),
+        takeUntil(this.stop$),
         catchError(err => err))
       .subscribe()
   }
