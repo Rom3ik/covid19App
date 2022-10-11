@@ -32,11 +32,11 @@ export class CovidContentComponent implements OnInit, OnDestroy {
     this.covidService.requestEnded.next(false);
     combineLatest([
         this.covidService.getAllCases(country ? country : 'Azerbaijan')
-          .pipe(catchError((err: any) => (of(err)))),
+          .pipe(catchError(err => of(err))),
         this.covidService.getHistory(country ? country : 'Azerbaijan')
-          .pipe(catchError((err: any) => (of(err)))),
+          .pipe(catchError(err => of(err))),
         this.covidService.getVaccines(country ? country : 'Azerbaijan')
-          .pipe(catchError((err: any) => (of(err)))),
+          .pipe(catchError(err => of(err))),
       ]
     )
       .pipe(
