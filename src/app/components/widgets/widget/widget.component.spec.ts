@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CovidWidgetComponent } from './covid-widget.component';
+import { WidgetComponent } from './widget.component';
 
 describe('CovidWidgetComponent', () => {
-  let component: CovidWidgetComponent;
-  let fixture: ComponentFixture<CovidWidgetComponent>;
+  let component: WidgetComponent;
+  let fixture: ComponentFixture<WidgetComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CovidWidgetComponent ]
+      declarations: [ WidgetComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CovidWidgetComponent);
+    fixture = TestBed.createComponent(WidgetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

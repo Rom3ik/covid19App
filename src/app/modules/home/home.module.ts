@@ -2,16 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import {MainComponent} from "./main/main.component";
-import {CovidWidgetComponent} from "../../components/widgets/covid-widget/covid-widget.component";
+import {WidgetComponent} from "../../components/widgets/widget/widget.component";
+import {CovidContentComponent} from "../../components/ui/covid-content/covid-content.component";
 
 @NgModule({
   declarations: [
     MainComponent,
-    CovidWidgetComponent
+    WidgetComponent,
+    CovidContentComponent
   ],
-  imports: [
-    CommonModule,
-    HomeRoutingModule
-  ]
+    imports: [
+        CommonModule,
+        HomeRoutingModule,
+    ]
 })
 export class HomeModule { }
