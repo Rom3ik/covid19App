@@ -1,5 +1,6 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {CovidStatisticService} from "../../../core/services/covid-statistic.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-widget',
@@ -10,12 +11,14 @@ import {CovidStatisticService} from "../../../core/services/covid-statistic.serv
 
 export class WidgetComponent implements OnInit {
 
+  @Input() 'widgetName': string = 'Widget';
+  requestFinished$ = new Observable()
 
-
-  constructor(public covidService: CovidStatisticService) {
+  constructor(private covidService: CovidStatisticService) {
   }
 
   ngOnInit(): void {
+    this.requestFinished$ = this.covidService.requestIsFinished();
   }
 
 }

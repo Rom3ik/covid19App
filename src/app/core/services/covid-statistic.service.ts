@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {History, Statistic, Vaccines} from "../interfaces/covid";
+import {CovidDataService} from "./covid-data.service";
 
 const API_URL = 'https://covid-api.mmediagroup.fr/v1';
 const prefixes = {
@@ -15,12 +16,13 @@ const prefixes = {
 })
 export class CovidStatisticService {
 
-  casesList!: Statistic;
-  newCases: number = 0;
-  vaccinatedPeopleInPercent: number = 0;
+
   private requestEnded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private httpClient: HttpClient) {
+  constructor(
+    private httpClient: HttpClient,
+    private covidStorage: CovidDataService
+  ) {
   }
 
   getAllCases(country: string): Observable<Statistic> {
@@ -35,25 +37,25 @@ export class CovidStatisticService {
     return this.httpClient.get<Vaccines>(API_URL + prefixes.vaccines + `?country=${country}`)
   }
 
-  calculateNewCases(last: number, yesterday: number): void {
-    if (!last && !yesterday) {
+  calculateNewCases(today: number, yesterday: number): void {
+    if (!today && !yesterday) {
       return;
     }
-    this.newCases = last - yesterday;
+    this.covidStorage.newCases = today - yesterday;
   }
 
   getPercentageOfVaccinatedPeople(vaccinatedPeople: number, totalPopulation: number): void {
     if (!vaccinatedPeople && !totalPopulation) {
       return
     }
-    this.vaccinatedPeopleInPercent = +(vaccinatedPeople * 100 / totalPopulation).toFixed(2);
+    this.covidStorage.vaccinatedPeopleInPercent = +(vaccinatedPeople * 100 / totalPopulation).toFixed(2);
   }
 
   handleRequestProgress(isEnded: boolean) {
     this.requestEnded.next(isEnded);
   }
 
-  requestIsTopped(){
+  requestIsFinished() {
     return this.requestEnded.asObservable();
   }
 

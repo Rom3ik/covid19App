@@ -1,26 +1,27 @@
 interface Default {
   All: {
-    population: number,
-    sq_km_area: number,
-    life_expectancy: string,
-    elevation_in_meters: number,
-    continent: string,
     abbreviation: string,
-    location: string,
-    iso: number,
     capital_city: string,
-    lat: string,
-    long: string,
-    updated: string,
+    continent: string,
     country: string,
+    elevation_in_meters: number,
+    iso: number,
+    life_expectancy: string,
+    location: string,
+    population: number,
+    sq_km_area: number
   }
 }
+
 
 export type Statistic = Default & {
   All: {
     confirmed: number,
     recovered: number,
     deaths: number,
+    lat: string,
+    long: string,
+    updated: string,
   },
 }
 

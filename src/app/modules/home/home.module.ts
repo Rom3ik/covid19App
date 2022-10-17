@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import {MainComponent} from "./main/main.component";
 import {WidgetComponent} from "../../components/widgets/widget/widget.component";
-import {CovidContentComponent} from "../../components/ui/covid-content/covid-content.component";
+import {CovidContentComponent} from "../../components/widgets/covid-content/covid-content.component";
 
 @NgModule({
   declarations: [
