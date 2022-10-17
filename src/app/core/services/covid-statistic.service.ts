@@ -49,7 +49,7 @@ export class CovidStatisticService {
     this.vaccinatedPeopleInPercent = +(vaccinatedPeople * 100 / totalPopulation).toFixed(2);
   }
 
-  handleRequestStarted(isEnded: boolean) {
+  handleRequestProgress(isEnded: boolean) {
     this.requestEnded.next(isEnded);
   }
 

@@ -29,7 +29,7 @@ export class CovidContentComponent implements OnInit, OnDestroy {
   }
 
   getCovidStatistic(country: string): void {
-    this.covidService.handleRequestStarted(false);
+    this.covidService.handleRequestProgress(false);
     combineLatest([
         this.covidService.getAllCases(country)
           .pipe(catchError(err => of(err))),
@@ -47,7 +47,7 @@ export class CovidContentComponent implements OnInit, OnDestroy {
           this.covidService.getPercentageOfVaccinatedPeople(vaccines?.All?.people_vaccinated, vaccines?.All?.population);
         }),
         finalize(() => {
-          this.covidService.handleRequestStarted(true);
+          this.covidService.handleRequestProgress(true);
         }),
         takeUntil(this.stop$),
         catchError(err => throwError(err)))
