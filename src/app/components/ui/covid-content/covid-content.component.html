@@ -32,7 +32,7 @@
   <div class="d-flex gap-20 align-items-center">
     <p>New cases (1d*):</p>
   </div>
-  <span>{{covidService?.newCases}}</span>
+  <span>{{covidService?.newCases ? covidService?.newCases : 'Error'}}</span>
 </div>
 <div class="content-wrapper">
   <div class="d-flex gap-20 align-items-center">

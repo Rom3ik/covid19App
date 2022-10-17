@@ -18,7 +18,7 @@ export class CovidStatisticService {
   casesList!: Statistic;
   newCases: number = 0;
   vaccinatedPeopleInPercent: number = 0;
-  requestEnded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private requestEnded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private httpClient: HttpClient) {
   }
@@ -47,6 +47,14 @@ export class CovidStatisticService {
       return
     }
     this.vaccinatedPeopleInPercent = +(vaccinatedPeople * 100 / totalPopulation).toFixed(2);
+  }
+
+  handleRequestStarted(isEnded: boolean) {
+    this.requestEnded.next(isEnded);
+  }
+
+  requestIsTopped(){
+    return this.requestEnded.asObservable();
   }
 
 }

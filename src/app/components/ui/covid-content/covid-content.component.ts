@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {CovidStatisticService} from "../../../core/services/covid-statistic.service";
-import {combineLatest, of, Subject} from "rxjs";
+import {combineLatest, of, Subject, throwError} from "rxjs";
 import {catchError, finalize, map, takeUntil} from "rxjs/operators";
 import {countries} from "../../../countries";
 
@@ -24,18 +24,18 @@ export class CovidContentComponent implements OnInit, OnDestroy {
     this.getCovidStatistic('Azerbaijan');
   }
 
-  trackByName(index: number, item: any) {
+  trackByName(index: number, item: any): string {
     return item.country;
   }
 
   getCovidStatistic(country: string): void {
-    this.covidService.requestEnded.next(false);
+    this.covidService.handleRequestStarted(false);
     combineLatest([
-        this.covidService.getAllCases(country ? country : 'Azerbaijan')
+        this.covidService.getAllCases(country)
           .pipe(catchError(err => of(err))),
-        this.covidService.getHistory(country ? country : 'Azerbaijan')
+        this.covidService.getHistory(country)
           .pipe(catchError(err => of(err))),
-        this.covidService.getVaccines(country ? country : 'Azerbaijan')
+        this.covidService.getVaccines(country)
           .pipe(catchError(err => of(err))),
       ]
     )
@@ -47,10 +47,10 @@ export class CovidContentComponent implements OnInit, OnDestroy {
           this.covidService.getPercentageOfVaccinatedPeople(vaccines?.All?.people_vaccinated, vaccines?.All?.population);
         }),
         finalize(() => {
-          this.covidService.requestEnded.next(true)
+          this.covidService.handleRequestStarted(true);
         }),
         takeUntil(this.stop$),
-        catchError(err => err))
+        catchError(err => throwError(err)))
       .subscribe()
   }
 

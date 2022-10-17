@@ -1,6 +1,6 @@
 <div class="widget-container">
   <div class="widget-header"></div>
-  <div class="widget-content" *ngIf="(covidService.requestEnded | async) else loading">
+  <div class="widget-content" *ngIf="(covidService.requestIsTopped() | async) else loading">
     <ng-content></ng-content>
   </div>
 
