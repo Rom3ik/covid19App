@@ -11,7 +11,7 @@ import {Observable} from "rxjs";
 
 export class WidgetComponent implements OnInit {
 
-  @Input() 'widgetName': string = 'Widget';
+  @Input() 'widgetName': string = '';
   requestFinished$ = new Observable()
 
   constructor(private covidService: CovidStatisticService) {
