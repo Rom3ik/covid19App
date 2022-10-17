@@ -3,6 +3,7 @@ import {CovidStatisticService} from "../../../core/services/covid-statistic.serv
 import {combineLatest, of, Subject, throwError} from "rxjs";
 import {catchError, finalize, map, takeUntil} from "rxjs/operators";
 import {countries} from "../../../countries";
+import {History, Statistic, Vaccines} from "../../../core/interfaces/covid";
 
 @Component({
   selector: 'app-covid-content',
@@ -32,11 +33,11 @@ export class CovidContentComponent implements OnInit, OnDestroy {
     this.covidService.handleRequestProgress(false);
     combineLatest([
         this.covidService.getAllCases(country)
-          .pipe(catchError(err => of(err))),
+          .pipe(catchError((err: Statistic) => of(err))),
         this.covidService.getHistory(country)
-          .pipe(catchError(err => of(err))),
+          .pipe(catchError((err: History) => of(err))),
         this.covidService.getVaccines(country)
-          .pipe(catchError(err => of(err))),
+          .pipe(catchError((err: Vaccines) => of(err))),
       ]
     )
       .pipe(
