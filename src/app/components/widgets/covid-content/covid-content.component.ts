@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {CovidStatisticService} from "../../../core/services/covid-statistic.service";
-import {combineLatest, forkJoin, of, Subject} from "rxjs";
+import {forkJoin, of, Subject} from "rxjs";
 import {catchError, finalize, map, takeUntil} from "rxjs/operators";
 import {countries} from "../../../countries";
 import {History, Statistic, Vaccines} from "../../../core/interfaces/covid";
