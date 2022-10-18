@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
+import {Observable} from "rxjs";
 import {History, Statistic, Vaccines} from "../interfaces/covid";
 import {CovidDataService} from "./covid-data.service";
 
@@ -17,7 +17,6 @@ const prefixes = {
 export class CovidStatisticService {
 
 
-  private requestEnded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
     private httpClient: HttpClient,
@@ -49,14 +48,6 @@ export class CovidStatisticService {
       return
     }
     this.covidStorage.vaccinatedPeopleInPercent = +(vaccinatedPeople * 100 / totalPopulation).toFixed(2);
-  }
-
-  handleRequestProgress(isEnded: boolean) {
-    this.requestEnded.next(isEnded);
-  }
-
-  requestIsFinished() {
-    return this.requestEnded.asObservable();
   }
 
 }

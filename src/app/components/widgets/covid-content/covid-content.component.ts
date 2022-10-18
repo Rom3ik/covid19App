@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {CovidStatisticService} from "../../../core/services/covid-statistic.service";
 import {forkJoin, Observable, of, Subject} from "rxjs";
-import {catchError, finalize, map, takeUntil, tap} from "rxjs/operators";
+import {catchError, map, takeUntil, tap} from "rxjs/operators";
 import {countries} from "../../../countries";
 import {History, Statistic, Vaccines} from "../../../core/interfaces/covid";
 import {CovidDataService} from "../../../core/services/covid-data.service";
@@ -16,7 +16,6 @@ export class CovidContentComponent implements OnInit, OnDestroy {
 
   private stop$: Subject<void> = new Subject();
   countries = countries;
-  requestFinished$ = new Observable()
   cases$!: Observable<Statistic>;
   selectedCountry: string = '';
 
@@ -24,7 +23,6 @@ export class CovidContentComponent implements OnInit, OnDestroy {
     private covidService: CovidStatisticService,
     public covidStorage: CovidDataService
   ) {
-    this.requestFinished$ = this.covidService.requestIsFinished();
   }
 
   ngOnInit(): void {
@@ -45,7 +43,6 @@ export class CovidContentComponent implements OnInit, OnDestroy {
   }
 
   combineHistoryAndVaccines(country: string): void {
-    this.covidService.handleRequestProgress(false);
     forkJoin([
         this.covidService.getHistory(country).pipe(catchError((err: History) => of(err))),
         this.covidService.getVaccines(country).pipe(catchError((err: Vaccines) => of(err))),
@@ -57,9 +54,6 @@ export class CovidContentComponent implements OnInit, OnDestroy {
           const yesterdayConfirmed = <number>Object.values(history.All?.dates)[1];
           this.covidService.calculateNewCases(todayConfirmed, yesterdayConfirmed);
           this.covidService.getPercentageOfVaccinatedPeople(vaccines?.All?.people_vaccinated, vaccines?.All?.population);
-        }),
-        finalize(() => {
-          this.covidService.handleRequestProgress(true);
         }),
         takeUntil(this.stop$),
         catchError(err => err))
