@@ -21,7 +21,8 @@ export class CovidContentComponent implements OnInit, OnDestroy {
   constructor(
     private covidService: CovidStatisticService,
     public covidStorage: CovidDataService,
-    private cdr: ChangeDetectorRef) {
+    private cdr: ChangeDetectorRef
+  ) {
     this.requestFinished$ = this.covidService.requestIsFinished();
   }
 
