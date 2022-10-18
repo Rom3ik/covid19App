@@ -1,4 +1,3 @@
-<script src="../../../modules/home/home.module.ts"></script>
 <ng-container *ngIf="(requestFinished$ | async) else loading">
   <small>Updated at: {{covidStorage.casesList?.All?.updated | date: 'YYYY-MM-dd'}}</small>
   <div class="select">
