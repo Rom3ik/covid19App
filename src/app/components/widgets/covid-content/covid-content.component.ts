@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {CovidStatisticService} from "../../../core/services/covid-statistic.service";
-import {forkJoin, of, Subject} from "rxjs";
+import {forkJoin, Observable, of, Subject} from "rxjs";
 import {catchError, finalize, map, takeUntil} from "rxjs/operators";
 import {countries} from "../../../countries";
 import {History, Statistic, Vaccines} from "../../../core/interfaces/covid";
@@ -16,11 +16,13 @@ export class CovidContentComponent implements OnInit, OnDestroy {
 
   private stop$: Subject<void> = new Subject();
   countries = countries;
+  requestFinished$ = new Observable()
 
   constructor(
     private covidService: CovidStatisticService,
     public covidStorage: CovidDataService,
     private cdr: ChangeDetectorRef) {
+    this.requestFinished$ = this.covidService.requestIsFinished();
   }
 
   ngOnInit(): void {

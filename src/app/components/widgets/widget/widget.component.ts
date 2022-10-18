@@ -1,6 +1,4 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
-import {CovidStatisticService} from "../../../core/services/covid-statistic.service";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-widget',
@@ -9,16 +7,10 @@ import {Observable} from "rxjs";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class WidgetComponent implements OnInit {
+export class WidgetComponent {
 
   @Input() 'widgetName': string = '';
-  requestFinished$ = new Observable()
 
-  constructor(private covidService: CovidStatisticService) {
+  constructor() {
   }
-
-  ngOnInit(): void {
-    this.requestFinished$ = this.covidService.requestIsFinished();
-  }
-
 }

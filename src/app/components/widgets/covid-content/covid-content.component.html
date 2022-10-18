@@ -1,42 +1,49 @@
-<small>Updated at: {{covidStorage.casesList?.All?.updated | date: 'YYYY-MM-dd'}}</small>
-<div class="select">
-  <select (change)="countryChanged($event)">
-    <option
-      [selected]="country.country === 'Azerbaijan'"
-      [value]="country.country"
-      *ngFor="let country of countries; trackBy: trackByName">{{country.country}}
-    </option>
-  </select>
-</div>
-<div class="content-wrapper">
-  <div class="d-flex gap-20 align-items-center">
-    <p>Confirmed:</p>
+<script src="../../../modules/home/home.module.ts"></script>
+<ng-container *ngIf="(requestFinished$ | async) else loading">
+  <small>Updated at: {{covidStorage.casesList?.All?.updated | date: 'YYYY-MM-dd'}}</small>
+  <div class="select">
+    <select (change)="countryChanged($event)">
+      <option
+        [selected]="country.country === 'Azerbaijan'"
+        [value]="country.country"
+        *ngFor="let country of countries; trackBy: trackByName">{{country.country}}
+      </option>
+    </select>
   </div>
-  <div class="d-column align-items-end">
-    <span>{{covidStorage.casesList?.All?.confirmed}}</span>
+  <div class="content-wrapper">
+    <div class="d-flex gap-20 align-items-center">
+      <p>Confirmed:</p>
+    </div>
+    <div class="d-column align-items-end">
+      <span>{{covidStorage.casesList?.All?.confirmed}}</span>
+    </div>
   </div>
-</div>
-<div class="content-wrapper">
-  <div class="d-flex gap-20 align-items-center">
-    <p>Recovered:</p>
+  <div class="content-wrapper">
+    <div class="d-flex gap-20 align-items-center">
+      <p>Recovered:</p>
+    </div>
+    <span>{{covidStorage.casesList?.All?.recovered}}</span>
   </div>
-  <span>{{covidStorage.casesList?.All?.recovered}}</span>
-</div>
-<div class="content-wrapper">
-  <div class="d-flex gap-20 align-items-center">
-    <p>Deaths:</p>
+  <div class="content-wrapper">
+    <div class="d-flex gap-20 align-items-center">
+      <p>Deaths:</p>
+    </div>
+    <span>{{covidStorage.casesList?.All?.deaths}}</span>
   </div>
-  <span>{{covidStorage.casesList?.All?.deaths}}</span>
-</div>
-<div class="content-wrapper">
-  <div class="d-flex gap-20 align-items-center">
-    <p>New cases (1d*):</p>
+  <div class="content-wrapper">
+    <div class="d-flex gap-20 align-items-center">
+      <p>New cases (1d*):</p>
+    </div>
+    <span>{{covidStorage?.newCases}}</span>
   </div>
-  <span>{{covidStorage?.newCases}}</span>
-</div>
-<div class="content-wrapper">
-  <div class="d-flex gap-20 align-items-center">
-    <p>% of pop. fully vaccinated:</p>
+  <div class="content-wrapper">
+    <div class="d-flex gap-20 align-items-center">
+      <p>% of pop. fully vaccinated:</p>
+    </div>
+    <span>{{covidStorage?.vaccinatedPeopleInPercent}}</span>
   </div>
-  <span>{{covidStorage?.vaccinatedPeopleInPercent}}</span>
-</div>
+</ng-container>
+
+<ng-template #loading>
+  <app-spinner></app-spinner>
+</ng-template>

@@ -2,13 +2,8 @@
   <div class="widget-header">
     <h1>{{widgetName}}</h1>
   </div>
-  <div class="widget-content" *ngIf="(requestFinished$ | async) else loading">
+  <div class="widget-content">
     <ng-content></ng-content>
   </div>
 </div>
 
-<ng-template #loading>
-  <div class="widget-content spinner-wrapper">
-    <div id="spinner"></div>
-  </div>
-</ng-template>
