@@ -1,9 +1,9 @@
-<ng-container *ngIf="(requestFinished$ | async) else loading">
-  <small>Updated at: {{covidStorage.casesList?.All?.updated | date: 'YYYY-MM-dd'}}</small>
+<ng-container *ngIf="(cases$ | async) as data else loading">
+  <small>Updated at: {{data?.All?.updated | date: 'YYYY-MM-dd'}}</small>
   <div class="select">
     <select (change)="countryChanged($event)">
       <option
-        [selected]="country.country === 'Azerbaijan'"
+        [selected]="country.country === selectedCountry"
         [value]="country.country"
         *ngFor="let country of countries; trackBy: trackByName">{{country.country}}
       </option>
@@ -14,20 +14,20 @@
       <p>Confirmed:</p>
     </div>
     <div class="d-column align-items-end">
-      <span>{{covidStorage.casesList?.All?.confirmed}}</span>
+      <span>{{data?.All?.confirmed}}</span>
     </div>
   </div>
   <div class="content-wrapper">
     <div class="d-flex gap-20 align-items-center">
       <p>Recovered:</p>
     </div>
-    <span>{{covidStorage.casesList?.All?.recovered}}</span>
+    <span>{{data?.All?.recovered}}</span>
   </div>
   <div class="content-wrapper">
     <div class="d-flex gap-20 align-items-center">
       <p>Deaths:</p>
     </div>
-    <span>{{covidStorage.casesList?.All?.deaths}}</span>
+    <span>{{data?.All?.deaths}}</span>
   </div>
   <div class="content-wrapper">
     <div class="d-flex gap-20 align-items-center">
